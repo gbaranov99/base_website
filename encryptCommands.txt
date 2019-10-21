@@ -1,0 +1,32 @@
+taging/testing commands:
+Need to modify /path/to/folder and domain name
+--------------------------
+sudo docker run -it --rm \
+-v /docker-volumes/etc/letsencrypt:/etc/letsencrypt \
+-v /docker-volumes/var/lib/letsencrypt:/var/lib/letsencrypt \
+-v </path/to/folder>/letsencrypt-site:/data/letsencrypt \
+-v "/docker-volumes/var/log/letsencrypt:/var/log/letsencrypt" \
+certbot/certbot \
+certonly --webroot \
+--register-unsafely-without-email --agree-tos \
+--webroot-path=/data/letsencrypt \
+--staging \
+-d <website>.com -d www.<website>.com
+
+Clean up staging:
+--------------------------
+sudo rm -rf /docker-volumes/
+
+Production certificate commands:
+Need to modify /path/to/index, email, and domain name
+--------------------------
+sudo docker run -it --rm \
+-v /docker-volumes/etc/letsencrypt:/etc/letsencrypt \
+-v /docker-volumes/var/lib/letsencrypt:/var/lib/letsencrypt \
+-v </path/to/folder>/letsencrypt-site:/data/letsencrypt \
+-v "/docker-volumes/var/log/letsencrypt:/var/log/letsencrypt" \
+certbot/certbot \
+certonly --webroot \
+--email <email>@gmail.com --agree-tos --no-eff-email \
+--webroot-path=/data/letsencrypt \
+-d <website>.com -d www.<website>.com
